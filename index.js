@@ -4,12 +4,14 @@ const app = express()
 require('dotenv').config()
 const cors = require('cors')
 const mongoose = require('mongoose');
-const PortfolioRouter = require('./routes/portfolio.route');
+const ProjectRouter = require('./routes/project.route');
+const ResumeRouter = require('./routes/resume.route');
 
 app.use(bodyParser.urlencoded({extended: true, limit: '50mb'}))
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(cors({origin: '*'}))
-app.use('/portfolio', PortfolioRouter)
+app.use('/project', ProjectRouter)
+app.use('/resume', ResumeRouter)
 const port = process.env.PORT
 
 app.get('/', (req, res)=> res.send('Welcome to my  Portfolio Server'))
