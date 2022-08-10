@@ -16,7 +16,7 @@ app.use('/resume', ResumeRouter)
 app.use('/portfolio', PortfolioRouter)
 const port = process.env.PORT
 
-app.get('/', (req, res)=> res.send('Welcome to my  Portfolio Server'))
+app.get('/', (req, res)=> res.send('Welcome to DavifyRx Portfolio Server'))
 
 mongoose.connect(process.env.URI, (err)=>{
     if(!err){
@@ -27,4 +27,4 @@ mongoose.connect(process.env.URI, (err)=>{
 })
 
 app.get('/', (req, res) => res.send('Hello World!'))
-app.listen(port, () => console.log(`My Portfolio server is listening on port ${port}!`))
+app.listen(port, () => console.log(`My Portfolio server is listening on port ${port}`))
