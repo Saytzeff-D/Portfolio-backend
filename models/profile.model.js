@@ -10,10 +10,10 @@ const profileSchema = mongoose.Schema({
     dob: {type: String, required: true },
     location: {type: String, required: true },
     address: {type: String, required: true },
-    fb: {type: String, required: true },
-    twi: {type: String, required: true },
+    fb: String,
+    twi: String,
     git: {type: String, required: true },
-    inst: {type: String, required: true }
+    inst: String
 })
 
 const ProfileModel = mongoose.model('profile_tbs', profileSchema)
