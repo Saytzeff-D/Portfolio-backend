@@ -1,4 +1,11 @@
 const ProfileModel = require("../models/profile.model")
+const cloudinary = require('cloudinary')
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
+})
 
 const createProfile = (req, res)=>{
     let profile = req.body
@@ -10,14 +17,14 @@ const createProfile = (req, res)=>{
                     if(!err){
                         res.status(200).json({message: 'Success'})
                     }else{
-                        res.status(300).json({message: ' Error occurred'})
+                        res.status(300).json({message: ' Error occurred', err})
                     }
                 })
             }else{
-                ProfileModel.findOneAndUpdate({photo: profile.photo}, profile, (err, result)=>{
+                console.log(profile.editId)
+                ProfileModel.findByIdAndUpdate(profile.editId, profile, (err, result)=>{
                     if(!err){
-                        console.log(result)
-                        res.send({status: true})
+                        res.send({status: true, message: 'Success'})
                     }else{
                         res.status(300).send({status: false})
                     }
@@ -37,5 +44,48 @@ const myProfile = (req, res)=>{
         }
     })
 }
+const uploadPhoto = (req, res)=>{
+    let uploadDetails = req.body
+    cloudinary.v2.uploader.upload(uploadDetails.photo, { resourece_type: 'auto' }, (err, result)=>{
+        if(!err){
+            ProfileModel.findByIdAndUpdate(uploadDetails._id, {photo: result.secure_url}, (err, resp)=>{
+                !err ? res.status(200).json({message: 'Success'}) : res.status(300).json('Server Error')
+            })
+        }else res.status(300).json('Cloudinary Error')
+    })
+}
 
-module.exports = { createProfile, myProfile }
+const uploadHeaderImg = (req, res)=>{
+    let uploadDetails = req.body
+    cloudinary.v2.uploader.upload(uploadDetails.headerImg, { resourece_type: 'auto' }, (err, result)=>{
+        if(!err){
+            ProfileModel.findByIdAndUpdate(uploadDetails._id, {headerImg: result.secure_url}, (err, resp)=>{
+                !err ? res.status(200).json({message: 'Success'}) : res.status(300).json('Server Error')
+            })
+        }else res.status(300).json('Cloudinary Error')
+    })
+}
+
+const uploadFooterImg = (req, res)=>{
+    let uploadDetails = req.body
+    cloudinary.v2.uploader.upload(uploadDetails.footerImg, { resourece_type: 'auto' }, (err, result)=>{
+        if(!err){
+            ProfileModel.findByIdAndUpdate(uploadDetails._id, {footerImg: result.secure_url}, (err, resp)=>{
+                !err ? res.status(200).json({message: 'Success'}) : res.status(300).json('Server Error')
+            })
+        }else res.status(300).json('Cloudinary Error')
+    })
+}
+
+const uploadMyCv = (req, res)=>{
+    let uploadDetails = req.body
+    cloudinary.v2.uploader.upload(uploadDetails.myCv, { resourece_type: 'auto' }, (err, result)=>{
+        if(!err){
+            ProfileModel.findByIdAndUpdate(uploadDetails._id, {myCv: result.secure_url}, (err, resp)=>{
+                !err ? res.status(200).json({message: 'Success'}) : res.status(300).json('Server Error')
+            })
+        }else res.status(300).json('Cloudinary Error')
+    })
+}
+
+module.exports = { createProfile, myProfile, uploadPhoto, uploadHeaderImg, uploadFooterImg, uploadMyCv }
