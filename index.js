@@ -6,12 +6,14 @@ const cors = require('cors')
 const mongoose = require('mongoose');
 const ProjectRouter = require('./routes/project.route');
 const ResumeRouter = require('./routes/resume.route');
+const PortfolioRouter = require('./routes/portfolio.route');
 
 app.use(bodyParser.urlencoded({extended: true, limit: '50mb'}))
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(cors({origin: '*'}))
 app.use('/project', ProjectRouter)
 app.use('/resume', ResumeRouter)
+app.use('/portfolio', PortfolioRouter)
 const port = process.env.PORT
 
 app.get('/', (req, res)=> res.send('Welcome to my  Portfolio Server'))

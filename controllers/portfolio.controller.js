@@ -5,7 +5,7 @@ const createProfile = (req, res)=>{
     let form = new ProfileModel(profile)
     ProfileModel.find((err, result)=>{
         if(!err){
-            if(result.length !== 0){
+            if(result.length == 0){
                 form.save((err)=>{
                     if(!err){
                         res.status(200).json({message: 'Success'})
@@ -28,5 +28,14 @@ const createProfile = (req, res)=>{
         }
     })
 }
+const myProfile = (req, res)=>{
+    ProfileModel.find((err, result)=>{
+        if(!err){
+            res.json({result})
+        }else{
+            res.status(300).json('Server Error')
+        }
+    })
+}
 
-module.exports = { createProfile }
+module.exports = { createProfile, myProfile }
