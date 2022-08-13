@@ -21,7 +21,6 @@ const createProfile = (req, res)=>{
                     }
                 })
             }else{
-                console.log(profile.editId)
                 ProfileModel.findByIdAndUpdate(profile.editId, profile, (err, result)=>{
                     if(!err){
                         res.send({status: true, message: 'Success'})
