@@ -1,6 +1,6 @@
-const expres = require('express')
+const express = require('express')
 const { createProfile, myProfile, uploadPhoto, uploadHeaderImg, uploadFooterImg, uploadMyCv } = require('../controllers/portfolio.controller')
-const PortfolioRouter = expres.Router()
+const PortfolioRouter = express.Router()
 
 PortfolioRouter.post('/createProfile', createProfile)
 PortfolioRouter.get('/profile', myProfile)
