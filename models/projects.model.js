@@ -6,7 +6,7 @@ const projectSchema = mongoose.Schema({
     mode: {type: String, required: true},
     majorLang: {type: String, required: true},
     repoLink:  {type: String, required: true},
-    deployedLink: {type: String, required: true}
+    deployedLink: String
 })
 
 const ProjectModel = mongoose.model('project_tbs', projectSchema)
