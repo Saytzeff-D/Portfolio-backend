@@ -2,15 +2,29 @@ const EducationModel = require("../models/education.model")
 const ExpertiseModel = require("../models/expertise.model")
 const LanguageModel = require("../models/language.model")
 const SkillModel = require("../models/skills.model")
+const cloudinary = require('cloudinary')
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
+})
 
 const addExpertise = (req, res)=>{
     let details = req.body
-    const form = new ExpertiseModel(details)
-    form.save((err, result)=>{
+    cloudinary.v2.uploader.upload(details.icon, {resoure_type: 'auto'}, (err, result)=>{
         if(!err){
-            res.status(200).json({message: 'Successfully Added'})
+            details.icon = result.secure_url
+            const form = new ExpertiseModel(details)
+            form.save((err, result)=>{
+                if(!err){
+                    res.status(200).json({message: 'Successfully Added'})
+                }else{
+                    res.status(300).json({message: 'Server Error'})
+                }
+            })
         }else{
-            res.status(300).json({message: 'Server Error'})
+            res.status(300).json({message: 'Cloudinary Error'})
         }
     })
 
