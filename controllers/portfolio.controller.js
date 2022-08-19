@@ -56,7 +56,7 @@ const uploadPhoto = (req, res)=>{
 
 const uploadHeaderImg = (req, res)=>{
     let uploadDetails = req.body
-    cloudinary.v2.uploader.upload(uploadDetails.headerImg, { resourece_type: 'auto' }, (err, result)=>{
+    cloudinary.v2.uploader.upload(uploadDetails.headerImg, { resource_type: 'auto' }, (err, result)=>{
         if(!err){
             ProfileModel.findByIdAndUpdate(uploadDetails._id, {headerImg: result.secure_url}, (err, resp)=>{
                 !err ? res.status(200).json({message: 'Success'}) : res.status(300).json('Server Error')
@@ -67,7 +67,7 @@ const uploadHeaderImg = (req, res)=>{
 
 const uploadFooterImg = (req, res)=>{
     let uploadDetails = req.body
-    cloudinary.v2.uploader.upload(uploadDetails.footerImg, { resourece_type: 'auto' }, (err, result)=>{
+    cloudinary.v2.uploader.upload(uploadDetails.footerImg, { resource_type: 'auto' }, (err, result)=>{
         if(!err){
             ProfileModel.findByIdAndUpdate(uploadDetails._id, {footerImg: result.secure_url}, (err, resp)=>{
                 !err ? res.status(200).json({message: 'Success'}) : res.status(300).json('Server Error')
@@ -78,7 +78,7 @@ const uploadFooterImg = (req, res)=>{
 
 const uploadMyCv = (req, res)=>{
     let uploadDetails = req.body
-    cloudinary.v2.uploader.upload(uploadDetails.myCv, { resourece_type: 'auto', public_id: 'myPorfolioCv' }, (err, result)=>{
+    cloudinary.v2.uploader.upload(uploadDetails.myCv, { resource_type: 'auto', public_id: 'myPorfolioCv' }, (err, result)=>{
         console.log(result)
         if(!err){
             ProfileModel.findByIdAndUpdate(uploadDetails._id, {myCv: result.secure_url}, (err, resp)=>{
